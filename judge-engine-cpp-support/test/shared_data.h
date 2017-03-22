@@ -12,83 +12,84 @@ class SharedData : public ::testing::Test {
 protected:
     virtual void SetUp() {
         for(int i = 0; i < 5; ++i) {
-            intArrayNode.PushBack(i+1, allocator);
+            arrayIntJson.PushBack(i+1, allocator);
         }
 
-        mapStringIntNode.AddMember("\"hello\"", 1, allocator);
-        mapStringIntNode.AddMember("\"world\"", 2, allocator);
+        mapStringIntJson.AddMember("\"hello\"", 1, allocator);
+        mapStringIntJson.AddMember("\"world\"", 2, allocator);
 
-        mapIntDoubleNode.AddMember("1", 1.0, allocator);
-        mapIntDoubleNode.AddMember("2", 2.0, allocator);
+        mapIntDoubleJson.AddMember("1", 1.0, allocator);
+        mapIntDoubleJson.AddMember("2", 2.0, allocator);
 
-        binaryTreeNode.PushBack(2, allocator);
-        binaryTreeNode.PushBack(1, allocator);
-        binaryTreeNode.PushBack(10, allocator);
-        binaryTreeNode.PushBack(rapidjson::Value(rapidjson::kNullType).Move(), allocator);
-        binaryTreeNode.PushBack(rapidjson::Value(rapidjson::kNullType).Move(), allocator);
-        binaryTreeNode.PushBack(5, allocator);
+        binaryTreeJson.PushBack(2, allocator);
+        binaryTreeJson.PushBack(1, allocator);
+        binaryTreeJson.PushBack(10, allocator);
+        binaryTreeJson.PushBack(rapidjson::Value(rapidjson::kNullType).Move(), allocator);
+        binaryTreeJson.PushBack(rapidjson::Value(rapidjson::kNullType).Move(), allocator);
+        binaryTreeJson.PushBack(5, allocator);
 
         for(int i = 0; i < 5; ++i) {
-            intArrayNode2.PushBack(i+6, allocator);
+            arrayIntJson2.PushBack(i+6, allocator);
         }
 
-        arrayArrayNode.PushBack(rapidjson::Value(intArrayNode, allocator).Move(), allocator);
-        arrayArrayNode.PushBack(rapidjson::Value(intArrayNode2, allocator).Move(), allocator);
+        arrayArrayIntJson.PushBack(rapidjson::Value(arrayIntJson, allocator).Move(), allocator);
+        arrayArrayIntJson.PushBack(rapidjson::Value(arrayIntJson2, allocator).Move(), allocator);
 
-        mapStringLinkedListNode.AddMember("\"hello\"", rapidjson::Value(intArrayNode, allocator).Move(), allocator);
-        mapStringLinkedListNode.AddMember("\"world\"", rapidjson::Value(intArrayNode2, allocator).Move(), allocator);
+        mapStringLinkedListIntJson.AddMember("\"hello\"", rapidjson::Value(arrayIntJson, allocator).Move(), allocator);
+        mapStringLinkedListIntJson.AddMember("\"world\"", rapidjson::Value(arrayIntJson2, allocator).Move(), allocator);
     }
 
-    rapidjson::Value intArrayNode = rapidjson::Value(rapidjson::kArrayType);
-    std::vector<int> intArray { 1, 2, 3, 4, 5 };
-    std::unordered_set<int> intSet { 1, 2, 3, 4, 5 };
-
-    // empty linked list
-    std::shared_ptr<LinkedListNode<int>> emptyLinkedList{nullptr};
-
-    std::shared_ptr<LinkedListNode<int>> linkedList = std::make_shared<LinkedListNode<int>>(
+    rapidjson::Value arrayIntJson = rapidjson::Value(rapidjson::kArrayType);
+    std::vector<int> arrayInt { 1, 2, 3, 4, 5 };
+    const std::vector<int>& listInt  = arrayInt;
+    std::unordered_set<int> setInt { 1, 2, 3, 4, 5 };
+    std::shared_ptr<LinkedListNode<int>> linkedListInt = std::make_shared<LinkedListNode<int>>(
             1, std::make_shared<LinkedListNode<int>>(
                     2, std::make_shared<LinkedListNode<int>>(
                             3, std::make_shared<LinkedListNode<int>>(
                                     4, std::make_shared<LinkedListNode<int>>(5)))));
 
     std::unordered_map<std::string, int> mapStringInt { { "hello", 1 } , { "world", 2 }};
-    rapidjson::Value mapStringIntNode = rapidjson::Value(rapidjson::kObjectType);
+    rapidjson::Value mapStringIntJson = rapidjson::Value(rapidjson::kObjectType);
 
     std::unordered_map<int, double> mapIntDouble { { 1, 1.0 } , { 2, 2.0 }};
-    rapidjson::Value mapIntDoubleNode = rapidjson::Value(rapidjson::kObjectType);
-
-    // empty binary tree
-    std::shared_ptr<BinaryTreeNode<int>> emptyBinaryTree{nullptr};
+    rapidjson::Value mapIntDoubleJson = rapidjson::Value(rapidjson::kObjectType);
 
     std::shared_ptr<BinaryTreeNode<int>> binaryTree = std::make_shared<BinaryTreeNode<int>>(
             2, std::make_shared<BinaryTreeNode<int>>(
                     1), std::make_shared<BinaryTreeNode<int>>(
                     10, std::make_shared<BinaryTreeNode<int>>(5), nullptr));
-    rapidjson::Value binaryTreeNode = rapidjson::Value(rapidjson::kArrayType);
+    rapidjson::Value binaryTreeJson = rapidjson::Value(rapidjson::kArrayType);
 
-    std::vector<int> intArray2 { 6, 7, 8, 9, 10 };
-    rapidjson::Value intArrayNode2 = rapidjson::Value(rapidjson::kArrayType);
-
-    std::vector<std::vector<int>> intArrayArray  {intArray, intArray2};
-    rapidjson::Value arrayArrayNode = rapidjson::Value(rapidjson::kArrayType);
-
-    std::shared_ptr<LinkedListNode<int>> linkedList2 = std::make_shared<LinkedListNode<int>>(
+    rapidjson::Value arrayIntJson2 = rapidjson::Value(rapidjson::kArrayType);
+    std::vector<int> arrayInt2 { 6, 7, 8, 9, 10 };
+    const std::vector<int>& listInt2 = arrayInt2;
+    std::shared_ptr<LinkedListNode<int>> linkedListInt2 = std::make_shared<LinkedListNode<int>>(
             6, std::make_shared<LinkedListNode<int>>(
                     7, std::make_shared<LinkedListNode<int>>(
                             8, std::make_shared<LinkedListNode<int>>(
                                     9, std::make_shared<LinkedListNode<int>>(10)))));
-    std::vector<std::shared_ptr<LinkedListNode<int>>> arrayLinkedList {linkedList, linkedList2};
 
-    std::unordered_set<std::shared_ptr<LinkedListNode<int>>> setLinkedList {linkedList, linkedList2};
-
-    std::shared_ptr<LinkedListNode<std::shared_ptr<LinkedListNode<int>>>> linkedListLinkedList =
+    rapidjson::Value arrayArrayIntJson = rapidjson::Value(rapidjson::kArrayType);
+    std::vector<std::vector<int>> arrayArrayInt  {arrayInt, arrayInt2};
+    const std::vector<std::vector<int>>& listListInt = arrayArrayInt;
+    std::shared_ptr<LinkedListNode<std::shared_ptr<LinkedListNode<int>>>> linkedListLinkedListInt =
             std::make_shared<LinkedListNode<std::shared_ptr<LinkedListNode<int>>>>(
-            linkedList, std::make_shared<LinkedListNode<std::shared_ptr<LinkedListNode<int>>>>(linkedList2));
+                    linkedListInt, std::make_shared<LinkedListNode<std::shared_ptr<LinkedListNode<int>>>>(linkedListInt2));
+    std::vector<std::shared_ptr<LinkedListNode<int>>> arrayLinkedListInt {linkedListInt, linkedListInt2};
+    std::unordered_set<std::shared_ptr<LinkedListNode<int>>> setLinkedListInt {linkedListInt, linkedListInt2};
 
-    std::unordered_map<std::string, std::shared_ptr<LinkedListNode<int>>> mapStringLinkedList { {"hello", linkedList},
-                                                                                 {"world", linkedList2} };
-    rapidjson::Value mapStringLinkedListNode = rapidjson::Value(rapidjson::kObjectType);
+    std::unordered_map<std::string, std::shared_ptr<LinkedListNode<int>>> mapStringLinkedListInt {
+            {"hello", linkedListInt},
+            {"world", linkedListInt2} };
+    rapidjson::Value mapStringLinkedListIntJson = rapidjson::Value(rapidjson::kObjectType);
+
+    // empty linked list
+    std::shared_ptr<LinkedListNode<int>> emptyLinkedList{nullptr};
+    // empty binary tree
+    std::shared_ptr<BinaryTreeNode<int>> emptyBinaryTree{nullptr};
+    // for empty linked list and empty binary tree
+    rapidjson::Value emptyArrayJson = rapidjson::Value(rapidjson::kArrayType);
 
     rapidjson::Document d;
     rapidjson::Document::AllocatorType& allocator = d.GetAllocator();

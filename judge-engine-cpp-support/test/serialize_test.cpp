@@ -22,29 +22,24 @@ TEST(serialize_test, primitive_types) {
 }
 
 TEST_F(SharedData, serialize_collection_test) {
-    EXPECT_EQ(true, intArrayNode == to_json(intArray, allocator));
-
-//    unordered_set<int> intSetTmp;
-//    from_json(to_json(intSet, allocator), intSetTmp);
-//    EXPECT_EQ(intSet, intSetTmp);
+    EXPECT_EQ(true, arrayIntJson == to_json(arrayInt, allocator));
+    EXPECT_EQ(true, arrayIntJson == to_json(listInt, allocator));
+//    EXPECT_EQ(true, arrayIntJson == to_json(setInt, allocator));
+    EXPECT_EQ(true, arrayIntJson == to_json(linkedListInt, allocator));
 
     EXPECT_EQ(true, rapidjson::Value(rapidjson::kArrayType) == to_json(emptyLinkedList, allocator));
 
-    EXPECT_EQ(true, intArrayNode == to_json(linkedList, allocator));
-
-    EXPECT_EQ(true, mapStringIntNode == to_json(mapStringInt, allocator));
-
-    EXPECT_EQ(true, mapIntDoubleNode == to_json(mapIntDouble, allocator));
+    EXPECT_EQ(true, mapStringIntJson == to_json(mapStringInt, allocator));
+    EXPECT_EQ(true, mapIntDoubleJson == to_json(mapIntDouble, allocator));
 
     EXPECT_EQ(true, rapidjson::Value(rapidjson::kArrayType) == to_json(emptyBinaryTree, allocator));
+    EXPECT_EQ(true, binaryTreeJson == to_json(binaryTree, allocator));
 
-    EXPECT_EQ(true, binaryTreeNode == to_json(binaryTree, allocator));
+    EXPECT_EQ(true, arrayArrayIntJson == to_json(arrayArrayInt, allocator));
+    EXPECT_EQ(true, arrayArrayIntJson == to_json(listListInt, allocator));
+    EXPECT_EQ(true, arrayArrayIntJson == to_json(linkedListLinkedListInt, allocator));
+    EXPECT_EQ(true, arrayArrayIntJson == to_json(arrayLinkedListInt, allocator));
+//    EXPECT_EQ(true, arrayArrayIntJson == to_json(setLinkedListInt, allocator));
 
-    EXPECT_EQ(true, arrayArrayNode == to_json(intArrayArray, allocator));
-
-    EXPECT_EQ(true, arrayArrayNode == to_json(arrayLinkedList, allocator));
-
-    EXPECT_EQ(true, arrayArrayNode == to_json(linkedListLinkedList, allocator));
-
-    EXPECT_EQ(true, mapStringLinkedListNode == to_json(mapStringLinkedList, allocator));
+    EXPECT_EQ(true, mapStringLinkedListIntJson == to_json(mapStringLinkedListInt, allocator));
 }

@@ -38,47 +38,65 @@ TEST(deserialize_test, primitive_types) {
 }
 
 TEST_F(SharedData, deserialize_collection_test) {
-    std::vector<int> intArrayTmp;
-    from_json(intArrayNode, intArrayTmp);
-    EXPECT_EQ(intArray, intArrayTmp);
+    std::vector<int> arrayIntTmp;
+    from_json(arrayIntJson, arrayIntTmp);
+    EXPECT_EQ(arrayInt, arrayIntTmp);
+
+    std::vector<int> listIntTmp;
+    from_json(arrayIntJson, listIntTmp);
+    EXPECT_EQ(listInt, listIntTmp);
 
     std::unordered_set<int> intSetTmp;
-    from_json(intArrayNode, intSetTmp);
-    EXPECT_EQ(intSet, intSetTmp);
+    from_json(arrayIntJson, intSetTmp);
+    EXPECT_EQ(setInt, intSetTmp);
 
     std::shared_ptr<LinkedListNode<int>> linkedListTmp;
-    from_json(intArrayNode, linkedListTmp);
-    EXPECT_EQ(linkedList, linkedListTmp);
+    from_json(arrayIntJson, linkedListTmp);
+    EXPECT_EQ(linkedListInt, linkedListTmp);
+
+    // empty linked list
+    std::shared_ptr<LinkedListNode<int>> emptyLinkedListTmp;
+    from_json(emptyArrayJson, emptyLinkedListTmp);
+    EXPECT_EQ(nullptr, emptyLinkedListTmp);
 
     std::unordered_map<std::string, int> mapStringIntTmp;
-    from_json(mapStringIntNode, mapStringIntTmp);
+    from_json(mapStringIntJson, mapStringIntTmp);
     EXPECT_EQ(mapStringInt, mapStringIntTmp);
 
     std::unordered_map<int, double> mapIntDoubleTmp;
-    from_json(mapIntDoubleNode, mapIntDoubleTmp);
+    from_json(mapIntDoubleJson, mapIntDoubleTmp);
     EXPECT_EQ(mapIntDouble, mapIntDoubleTmp);
 
+    // empty binary tree
+    std::shared_ptr<BinaryTreeNode<int>> emptyBinaryTreeTmp;
+    from_json(emptyArrayJson, emptyBinaryTreeTmp);
+    EXPECT_EQ(nullptr, emptyBinaryTreeTmp);
+
     std::shared_ptr<BinaryTreeNode<int>> binaryTreeTmp;
-    from_json(binaryTreeNode, binaryTreeTmp);
+    from_json(binaryTreeJson, binaryTreeTmp);
     EXPECT_EQ(binaryTree, binaryTreeTmp);
 
-    std::vector<std::vector<int>> intArrayArrayTmp;
-    from_json(arrayArrayNode, intArrayArrayTmp);
-    EXPECT_EQ(intArrayArray, intArrayArrayTmp);
+    std::vector<std::vector<int>> arrayArrayIntTmp;
+    from_json(arrayArrayIntJson, arrayArrayIntTmp);
+    EXPECT_EQ(arrayArrayInt, arrayArrayIntTmp);
+
+    std::vector<std::vector<int>> listListIntTmp;
+    from_json(arrayArrayIntJson, listListIntTmp);
+    EXPECT_EQ(listListInt, listListIntTmp);
 
     std::vector<std::shared_ptr<LinkedListNode<int>>> arrayLinkedListTmp;
-    from_json(arrayArrayNode, arrayLinkedListTmp);
-    EXPECT_EQ(arrayLinkedList, arrayLinkedListTmp);
+    from_json(arrayArrayIntJson, arrayLinkedListTmp);
+    EXPECT_EQ(arrayLinkedListInt, arrayLinkedListTmp);
 
     std::unordered_set<std::shared_ptr<LinkedListNode<int>>> setLinkedListTmp;
-    from_json(arrayArrayNode, setLinkedListTmp);
-    EXPECT_EQ(setLinkedList, setLinkedListTmp);
+    from_json(arrayArrayIntJson, setLinkedListTmp);
+    EXPECT_EQ(setLinkedListInt, setLinkedListTmp);
 
     std::shared_ptr<LinkedListNode<std::shared_ptr<LinkedListNode<int>>>> linkedListLinkedListTmp;
-    from_json(arrayArrayNode, linkedListLinkedListTmp);
-    EXPECT_EQ(linkedListLinkedList, linkedListLinkedListTmp);
+    from_json(arrayArrayIntJson, linkedListLinkedListTmp);
+    EXPECT_EQ(linkedListLinkedListInt, linkedListLinkedListTmp);
 
     std::unordered_map<std::string, std::shared_ptr<LinkedListNode<int>>> mapStringLinkedListTmp;
-    from_json(mapStringLinkedListNode, mapStringLinkedListTmp);
-    EXPECT_EQ(mapStringLinkedList, mapStringLinkedListTmp);
+    from_json(mapStringLinkedListIntJson, mapStringLinkedListTmp);
+    EXPECT_EQ(mapStringLinkedListInt, mapStringLinkedListTmp);
 }
