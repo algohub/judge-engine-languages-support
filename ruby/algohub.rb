@@ -84,6 +84,16 @@ module Algohub
   end
 
   class JudgeResult
+    attr_accessor :status_code
+    attr_accessor :error_message
+    attr_accessor :input
+    attr_accessor :output
+    attr_accessor :expected_output
+    attr_accessor :testcase_passed_count
+    attr_accessor :testcase_total_count
+    attr_accessor :elapsed_time
+    attr_accessor :consumed_memory
+
     def initialize(status_code, error_message=nil, input=nil,
                    output=nil, expected_output=nil, testcase_passed_count=0,
                    testcase_total_count=0, elapsed_time=0, consumed_memory=0)
