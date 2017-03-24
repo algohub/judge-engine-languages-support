@@ -158,7 +158,7 @@ module Algohub
       hash_code = 1
       p = self
       until p.nil?
-        hash_code = 31 * hash_code + (p.value.nil? ? 0 : p.value.hash)
+        hash_code = 31 * hash_code + p.value.hash
         p = p.next
       end
       hash_code
