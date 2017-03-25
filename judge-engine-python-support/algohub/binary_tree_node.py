@@ -19,7 +19,17 @@ class BinaryTreeNode:
         return not self.__eq__(other)
 
     def __hash__(self):
-        return BinaryTreeNode.hash_code(self)
+        hash_code = 1
+        stack = [self]
+
+        while len(stack) > 0:
+            p = stack.pop()
+            hash_code = hash_code * 31 + hash(p.value)
+            if p.right:
+                stack.append(p.left)
+            if p.left:
+                stack.append(p.left)
+        return hash_code
 
     @staticmethod
     def is_same(p, q):
@@ -30,7 +40,7 @@ class BinaryTreeNode:
         return p.value == q.value and BinaryTreeNode.is_same(p.left, q.left) and \
             BinaryTreeNode.is_same(p.right, q.right)
 
-    class NodeAndFather(object):
+    class NodeAndFather:
         def __init__(self, node, father, is_right):
             self.node = node  # type: BinaryTreeNode
             self.father = father  # type: BinaryTreeNode
@@ -108,14 +118,4 @@ class BinaryTreeNode:
             next = tmp
 
         return result[:-1] + ']'
-
-    @staticmethod
-    def hash_code(root):
-        if root is None:
-            return 0
-
-        result = 0 if root.value is None else hash(root.value)
-        result = 31 * result + hash(root.left)
-        result = 31 * result + hash(root.right)
-        return result
 

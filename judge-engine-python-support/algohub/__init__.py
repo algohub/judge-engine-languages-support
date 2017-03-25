@@ -28,7 +28,7 @@ def from_json(json_object, type_node, father_type=None):
         result = set()
         for x in json_object:
             result.add(from_json(x, type_node.element_type, type_node.value))
-        if father_type == IntermediateType.SET:
+        if father_type == IntermediateType.SET:  # set can only contain immutable objects
             result = frozenset(result)
     elif type_node.value == IntermediateType.MAP:
         result = {}
@@ -36,7 +36,7 @@ def from_json(json_object, type_node, father_type=None):
             real_key = from_json(json.loads(key), type_node.key_type)
             real_value = from_json(value, type_node.element_type, type_node.value)
             result[real_key] = real_value
-        if father_type == IntermediateType.SET:
+        if father_type == IntermediateType.SET:  # set can only contain immutable objects
             result = frozenset(result.items())
     elif type_node.value == IntermediateType.LINKED_LIST_NODE:
         if json_object:
@@ -56,7 +56,7 @@ def from_json(json_object, type_node, father_type=None):
         else:
             result = None
     else:
-        raise TypeError("Not supported type: " + str(type_node.value))
+        raise TypeError("Unsupported type: " + str(type_node.value))
 
     return result
 
@@ -115,7 +115,7 @@ def to_json(obj, type_node):
             current = next
             next = tmp
     else:
-        raise TypeError("Not supported type: " + str(type_node.value))
+        raise TypeError("Unsupported type: " + str(type_node.value))
 
     return result
 

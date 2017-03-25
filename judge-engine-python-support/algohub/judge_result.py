@@ -15,7 +15,7 @@ class JudgeResult:
         self.elapsed_time = elapsed_time
         self.consumed_memory = consumed_memory
 
-    def to_json(self):
+    def __str__(self):
         result = {'status_code': self.status_code.value}
         if self.error_message is not None:
             result['error_message'] = self.error_message

@@ -23,27 +23,24 @@ class TypeNode:
         return json.loads(json_str, object_hook=typenode_object_hook)
 
     @staticmethod
-    def has_set_type(type_node):
-        while type_node is not None:
-            if type_node.value == IntermediateType.SET:
-                return True
-            type_node = type_node.element_type
-        return False
-
-    @staticmethod
     def has_customized_type(type_node):
-        while type_node is not None:
-            if type_node.value == IntermediateType.LINKED_LIST_NODE or type_node.value == \
-                    IntermediateType.BINARY_TREE_NODE or type_node.value == IntermediateType.SET or \
-                    type_node.value == IntermediateType.MAP:
+        cur = type_node
+        while cur is not None:
+            if cur.value == IntermediateType.LINKED_LIST_NODE or \
+                            cur.value == IntermediateType.BINARY_TREE_NODE or \
+                            cur.value == IntermediateType.SET or \
+                            cur.value == IntermediateType.MAP:
                 return True
-            type_node = type_node.element_type
-        while type_node is not None:
-            if type_node.value == IntermediateType.LINKED_LIST_NODE or type_node.value == \
-                    IntermediateType.BINARY_TREE_NODE or type_node.value == IntermediateType.SET or \
-                    type_node.value == IntermediateType.MAP:
+            cur = cur.element_type
+
+        cur = type_node
+        while cur is not None:
+            if cur.value == IntermediateType.LINKED_LIST_NODE or \
+                            cur.value == IntermediateType.BINARY_TREE_NODE or \
+                            cur.value == IntermediateType.SET or \
+                            cur.value == IntermediateType.MAP:
                 return True
-            type_node = type_node.key_type
+            cur = cur.key_type
         return False
 
 # Map keys to classes
