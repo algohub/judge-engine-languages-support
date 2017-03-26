@@ -7,6 +7,7 @@
 #include <functional>
 #include <iterator>
 #include <limits>
+#include <climits>
 #include <memory>  // for std::shared_ptr
 #include <queue>
 #include <stack>
